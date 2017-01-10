@@ -11,7 +11,7 @@ def start(container_id):
     ports = []
 
     for port in exp_ports:
-        print(exp_ports[port]['HostPort'])
+        ## print(exp_ports[port]['HostPort'])
         ports += exp_ports[port]['HostPort'].join(ports)
 
     print(json.dumps(container))
