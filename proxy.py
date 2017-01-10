@@ -33,7 +33,9 @@ def data(container_id, ports, env):
     add_host = True
     nginx_config = sort_env(env)
 
-    json_data = json.loads(open('data.json').read())
+    with open('data.json', 'r') as f:
+        json_data = json.load(f)
+
     for host in json_data:
         if nginx_config[1] in host:
             add_host = False
@@ -58,8 +60,8 @@ def sort_env(env):
 
 def add_host_to_json(container_id, ports, config, json_data):
     json_data = json_data.append([('ports', ports), ('config', config)])
-    json_data = json.dumps(json_data)
-    open('data.json', 'r+').write(json_data)
+    with open('data.json', 'w') as f:
+        json.dump(json_data, f)
 
 
 for event in client.events():
