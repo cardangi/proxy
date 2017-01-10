@@ -37,7 +37,7 @@ def data(container_id, ports, env):
     for host in json_data:
         if nginx_config[1] in host:
             add_host = False
-
+    print(json_data)
     if add_host is True:
         add_host_to_json(container_id, ports, nginx_config, json_data)
     if add_host is False:
