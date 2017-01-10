@@ -11,7 +11,7 @@ def start(container_id):
     ports = ''
 
     for port in exp_ports:
-        if port:
+        if port['HostPort']:
             ports += ', ' + port['HostPort']
 
     print(json.dumps(container))
