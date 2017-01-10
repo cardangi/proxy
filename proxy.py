@@ -18,7 +18,7 @@ def start(container_id):
 
     if ports:
         ports_str = ', '.join(ports)
-        data(container_id, ports, env)
+        # data(container_id, ports, env)
 
     print('Started container with id: ' + container_id)
     print(
