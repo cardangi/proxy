@@ -11,10 +11,8 @@ def start(container_id):
     ports = []
 
     for port in exp_ports:
-        print(exp_ports[port][0]['HostPort'])
         ports[:0] = [exp_ports[port][0]['HostPort']]
 
-    print(ports)
     print('Started container with id: ' + container_id)
     print('Container ' + container['Config']['Hostname'] + ', is on ip ' + ipaddress + ', and port/s ' + ', '.join(ports))
 
@@ -28,8 +26,6 @@ for event in client.events():
     event = json.loads(event)
     if 'Action' in event.keys() and 'id' in event.keys():
         if 'start' in event['Action']:
-            print('Got a start action')
             start(event['id'])
         if 'destroy' in event['Action']:
-            print('Got a destroy action')
             destroy(event['id'])
