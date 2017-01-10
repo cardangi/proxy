@@ -10,8 +10,8 @@ def start(container_id):
     exp_ports = container['HostConfig']['PortBindings']
     ports = ''
 
-    for port, host_port in exp_ports:
-        print(host_port)
+    for port in exp_ports:
+        print(port[0])
         # ports += ', ' + port[0]['HostPort']
 
     print(json.dumps(container))
