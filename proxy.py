@@ -10,14 +10,18 @@ def start(container_id):
     exp_ports = container['NetworkSettings']['Ports']
     env = container['Config']['Env']
     ports = []
+    ports_str = 'no ports'
 
     for port in exp_ports:
         if exp_ports[port] is not None:
             ports[:0] = [exp_ports[port][0]['HostPort']]
 
+    if ports:
+        ports_str = ', '.join(ports)
+
     print('Started container with id: ' + container_id)
     print(
-        'Container ' + container['Config']['Hostname'] + ', is on ip ' + ipaddress + ', and port/s ' + ', '.join(ports))
+        'Container ' + container['Config']['Hostname'] + ', is on ip ' + ipaddress + ', and port/s ' + ports_str)
     data(container_id, ports, env)
 
 
