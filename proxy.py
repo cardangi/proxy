@@ -1,8 +1,11 @@
 import docker
 import json
 
+client = docker.Client(base_url='unix://var/run/docker.sock')
+
 
 def start(container_id):
+    print(client.get(container_id))
     print('Started container with id: ' + container_id)
 
 
@@ -10,7 +13,6 @@ def destroy(container_id):
     print('Destroyed container with id: ' + container_id)
 
 
-client = docker.Client(base_url='unix://var/run/docker.sock')
 print('Started proxy')
 for event in client.events():
     event = json.loads(event)
