@@ -8,15 +8,15 @@ def start(container_id):
     container = client.inspect_container(container_id)
     ipaddress = container['NetworkSettings']['Networks']['bridge']['IPAddress']
     exp_ports = container['HostConfig']['PortBindings']
-    ports = ''
+    ports = []
 
     for port in exp_ports:
         print(exp_ports[port]['HostPort'])
-        ports += ', ' + exp_ports[port]['HostPort']
+        ports += exp_ports[port]['HostPort'].join(ports)
 
     print(json.dumps(container))
     print('Started container with id: ' + container_id)
-    print('Container ' + container['Config']['Hostname'] + ', is on ip ' + ipaddress + ', and port/s ' + ports)
+    print('Container ' + container['Config']['Hostname'] + ', is on ip ' + ipaddress + ', and port/s ' + '-'.join(ports))
 
 
 def destroy(container_id):
