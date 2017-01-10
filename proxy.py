@@ -14,7 +14,7 @@ def start(container_id):
         print(exp_ports[port][0]['HostPort'])
         ports = ports.append(exp_ports[port][0]['HostPort'])
 
-    print(json.dumps(container))
+    print(ports)
     print('Started container with id: ' + container_id)
     print('Container ' + container['Config']['Hostname'] + ', is on ip ' + ipaddress + ', and port/s ' + ', '.join(ports))
 
