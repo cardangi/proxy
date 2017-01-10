@@ -7,12 +7,11 @@ client = docker.Client(base_url='unix://var/run/docker.sock')
 def start(container_id):
     container = client.inspect_container(container_id)
     ipaddress = container['NetworkSettings']['Networks']['bridge']['IPAddress']
-    exp_ports = container['NetworkSettings']['Ports']
+    exp_ports = container['HostConfig']['PortBindings']
     ports = ''
 
     for port in exp_ports:
-        if port['HostPort']:
-            ports += ', ' + port['HostPort']
+        ports += ', ' + port[0]['HostPort']
 
     print(json.dumps(container))
     print('Started container with id: ' + container_id)
