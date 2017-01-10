@@ -29,7 +29,7 @@ def data(container_id, ports, env):
     add_host = True
     nginx_config = sort_env(env)
 
-    json_data = json.loads(open('data.json'))
+    json_data = json.loads(open('data.json').read())
     for host in json_data:
         if nginx_config[1] in host:
             add_host = False
