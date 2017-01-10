@@ -12,7 +12,7 @@ def start(container_id):
 
     for port in exp_ports:
         # print(exp_ports[port]['HostPort'])
-        ports = ports.append(str(exp_ports[port]['HostPort']))
+        ports = ports.append(int(exp_ports[port]['HostPort']))
 
     print(json.dumps(container))
     print('Started container with id: ' + container_id)
