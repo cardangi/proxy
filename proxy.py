@@ -12,11 +12,11 @@ def start(container_id):
 
     for port in exp_ports:
         print(exp_ports[port][0]['HostPort'])
-        # ports[:0] = exp_ports[port]['HostPort']
+        ports = ports.append(exp_ports[port][0]['HostPort'])
 
     print(json.dumps(container))
     print('Started container with id: ' + container_id)
-    print('Container ' + container['Config']['Hostname'] + ', is on ip ' + ipaddress + ', and port/s ' + '-'.join(ports))
+    print('Container ' + container['Config']['Hostname'] + ', is on ip ' + ipaddress + ', and port/s ' + ', '.join(ports))
 
 
 def destroy(container_id):
