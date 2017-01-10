@@ -5,7 +5,7 @@ client = docker.Client(base_url='unix://var/run/docker.sock')
 
 
 def start(container_id):
-    print(client.get(container_id))
+    print(client.containers().get(container_id))
     print('Started container with id: ' + container_id)
 
 
