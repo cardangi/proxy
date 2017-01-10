@@ -11,8 +11,8 @@ def start(container_id):
     ports = None
 
     for port in exp_ports:
-        # print(exp_ports[port]['HostPort'])
-        ports[:0] = exp_ports[port]['HostPort']
+        print(exp_ports[port]['HostPort'])
+        # ports[:0] = exp_ports[port]['HostPort']
 
     print(json.dumps(container))
     print('Started container with id: ' + container_id)
