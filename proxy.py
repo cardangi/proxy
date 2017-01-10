@@ -7,9 +7,15 @@ client = docker.Client(base_url='unix://var/run/docker.sock')
 def start(container_id):
     container = client.inspect_container(container_id)
     ipaddress = container['NetworkSettings']['Networks']['bridge']['IPAddress']
+    exp_ports = container['NetworkSettings']['Ports']
+    ports = ''
+
+    for port in exp_ports:
+        ports += ', ' + port['HostPort']
+
     print(json.dumps(container))
     print('Started container with id: ' + container_id)
-    print('Container ' + container['Config']['Hostname'] + ', is on ip ' + ipaddress)
+    print('Container ' + container['Config']['Hostname'] + ', is on ip ' + ipaddress + ', and port/s ' + ports)
 
 
 def destroy(container_id):
