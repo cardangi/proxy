@@ -55,7 +55,7 @@ def sort_env(env):
 def add_host_to_json(container_id, ports, config, json_data):
     json_data = json_data.append([('ports', ports), ('config', config)])
     json_data = json.dumps(json_data)
-    open('data.json').write(json_data)
+    open('data.json', 'r+').write(json_data)
 
 
 for event in client.events():
