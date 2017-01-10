@@ -7,7 +7,7 @@ client = docker.Client(base_url='unix://var/run/docker.sock')
 def start(container_id):
     container = client.inspect_container(container_id)
     ipaddress = container['NetworkSettings']['Networks']['bridge']['IPAddress']
-    exp_ports = container['HostConfig']['PortBindings']
+    exp_ports = container['NetworkSettings']['Ports']
     ports = []
 
     for port in exp_ports:
