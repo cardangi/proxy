@@ -12,7 +12,7 @@ def start(container_id):
 
     for port in exp_ports:
         if exp_ports[port] is not None:
-            print(exp_ports[port][0])
+            print(exp_ports[port][0]['HostPort'])
         # ports[:0] = [exp_ports[port][0]['HostPort']]
 
     print(json.dumps(container))
