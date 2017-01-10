@@ -6,14 +6,4 @@ def main():
     for event in client.events():
         print(event)
         
-
-
-def created():
-    return 'Created'
-
-
-def removed():
-    return 'Removed'
-
-
 main()
