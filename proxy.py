@@ -20,5 +20,4 @@ def removed():
     return 'Removed'
 
 
-if __name__ is '__main__':
-    main()
+main()
