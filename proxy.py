@@ -8,7 +8,7 @@ def start(container_id):
     container = client.inspect_container(container_id)
     ipaddress = container['NetworkSettings']['Networks']['bridge']['IPAddress']
     exp_ports = container['HostConfig']['PortBindings']
-    ports = []
+    ports = None
 
     for port in exp_ports:
         # print(exp_ports[port]['HostPort'])
