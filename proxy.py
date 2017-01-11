@@ -32,8 +32,12 @@ def group_containers_by_env(container_id, container_ports, ip_address):
         env = container['Config']['Env']
         env = sort_env(env)
         print(ip_address + ':' + container_ports[0])
-        hosts[env[0]]['ip'].update({ip_address + ':' + container_ports[0]})
-        hosts[env[0]]['https'] = env[3]
+        hosts.update({env[0]: {
+            'ip': {
+                ip_address + ':' + container_ports[0]
+            },
+            'https': env[3]
+        }})
 
 
 def ports(container_ports):
