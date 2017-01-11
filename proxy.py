@@ -33,8 +33,8 @@ def group_containers_by_env(container_id, container_ports, ip_address):
         print(env)
         env = sort_env(env)
         if 'VIRTUAL_HOST' in env.keys():
-            hosts[env['VIRTUAL_HOST']]['ip'][:0] = ip_address + ':' + container_ports[0]
-            hosts['https'] = env['HTTPS']
+            hosts[str(env['VIRTUAL_HOST'])]['ip'][:0] = ip_address + ':' + container_ports[0]
+            hosts[str(env['VIRTUAL_HOST'])]['https'] = env['HTTPS']
 
 
 def ports(container_ports):
