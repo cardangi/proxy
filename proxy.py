@@ -45,9 +45,9 @@ def group_containers_by_env(container_id, container_ports, ip_address):
 def ports(container_ports):
     public_ports = []
     for port in container_ports:
-        private_port = str(port['PrivatePort'])
-        public_port = str(port['PublicPort'])
         if 'PublicPort' in port.keys() and 'PrivatePort' in port.keys():
+            private_port = str(port['PrivatePort'])
+            public_port = str(port['PublicPort'])
             if '80' in private_port or '8080' in private_port or '8000' in private_port:
                 public_ports[:0] = [public_port]
     return public_ports
