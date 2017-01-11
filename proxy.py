@@ -21,7 +21,7 @@ def get_containers():
 def ports(container_ports):
     public_ports = []
     for port in container_ports:
-        print(port)
+        print(port['PublicPort'])
     #    public_ports = port['PublicPort']
     #return public_ports
 
