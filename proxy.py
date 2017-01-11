@@ -83,7 +83,7 @@ def sort_env(env):
     nginx_config = []
     for env_var in env:
         # environment = {env_var.split('='): env_var.split('=')}
-        print(env_var.split('='))
+        print(env_var.split('=')[0])
         if 'VIRTUAL_HOST' in env_var:
             nginx_config[1] = env_var['VIRTUAL_HOST']
         if 'LETSENCRYPT_EMAIL' in env_var:
