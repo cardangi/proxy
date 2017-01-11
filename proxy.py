@@ -97,7 +97,6 @@ def sort_env(env):
 
 for event in client.events():
     event = json.loads(event)
-    get_containers()
     if 'Action' in event.keys() and 'id' in event.keys():
         if 'start' in event['Action']:
             get_containers()
