@@ -32,7 +32,7 @@ def group_containers_by_env(container_id, container_ports, ip_address):
         env = container['Config']['Env']
         print(env)
         env = sort_env(env)
-        if env['VIRTUAL_HOST']:
+        if 'VIRTUAL_HOST' in env.keys():
             hosts.update({env['VIRTUAL_HOST']: {
                 'ip': {
                     ip_address + ':' + container_ports[0]
