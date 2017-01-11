@@ -38,7 +38,7 @@ def group_containers_by_env(container_id, container_ports, ip_address):
                     'ip': [],
                     'https': 'True'
                 }
-            hosts[str(env['VIRTUAL_HOST'])]['ip'][0] = ip_address + ':' + container_ports[0]
+            hosts[str(env['VIRTUAL_HOST'])]['ip'][:0] = [ip_address + ':' + container_ports[0]]
             hosts[str(env['VIRTUAL_HOST'])]['https'] = env['HTTPS']
 
 
