@@ -36,7 +36,8 @@ def group_containers_by_env(container_id, container_ports, ip_address):
             if env['VIRTUAL_HOST'] not in hosts.keys():
                 hosts[env['VIRTUAL_HOST']] = {
                     'ip': [],
-                    'https': 'True'
+                    'https': 'True',
+                    'domains': env['VIRTUAL_HOST']
                 }
             hosts[str(env['VIRTUAL_HOST'])]['ip'][:0] = [ip_address + ':' + container_ports[0]]
             hosts[str(env['VIRTUAL_HOST'])]['https'] = env['HTTPS']
@@ -96,6 +97,7 @@ def sort_env(env):
 
 for event in client.events():
     event = json.loads(event)
+    get_containers()
     if 'Action' in event.keys() and 'id' in event.keys():
         if 'start' in event['Action']:
             get_containers()
