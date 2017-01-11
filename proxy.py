@@ -49,7 +49,7 @@ def ports(container_ports):
         public_port = str(port['PublicPort'])
         if 'PublicPort' in port.keys() and 'PrivatePort' in port.keys():
             if '80' in private_port or '8080' in private_port or '8000' in private_port:
-                public_ports[:0] = [public_ports]
+                public_ports[:0] = [public_port]
     return public_ports
 
 
