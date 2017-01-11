@@ -88,7 +88,7 @@ def sort_env(env):
         if 'LETSENCRYPT_EMAIL' in environment:
             nginx_config[2] = environment['LETSENCRYPT_EMAIL']
         if not 'HTTPS' in environment:
-            nginx_config[3] = environment['HTTPS']
+            nginx_config[3] = True
     return nginx_config
 
 
