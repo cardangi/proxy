@@ -33,7 +33,6 @@ def group_containers_by_env(container_id, container_ports, ip_address):
     if container_ports:
         container = client.inspect_container(container_id)
         env = container['Config']['Env']
-        print(env)
         env = sort_env(env)
         if 'VIRTUAL_HOST' in env.keys():
             if env['VIRTUAL_HOST'] not in hosts.keys():
@@ -74,7 +73,7 @@ def render():
     context = {
         hosts: hosts
     }
-    path, filename = os.path.split('nginx.jinja2')
+    path, filename = os.path.split('./nginx.jinja2')
     print(jinja2.Environment(
         loader=jinja2.FileSystemLoader(path or './')
     ).get_template(filename).render(context))
