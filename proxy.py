@@ -24,8 +24,7 @@ def start(container_id):
     print(
         'Container ' + container['Config']['Hostname'] + ', is on ip ' + ipaddress + ', and port/s ' + ports_str)
     print(client.containers(all=True, filters={
-        'status': 'running',
-        'net': 'bridge'
+        'status': 'running'
     }))
 
 
