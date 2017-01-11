@@ -25,7 +25,7 @@ def ports(container_ports):
     public_ports = []
     for port in container_ports:
         print(port)
-        if port:
+        if 'PublicPort' in port.keys():
             public_ports[:0] = [str(port['PublicPort'])]
     return public_ports
 
