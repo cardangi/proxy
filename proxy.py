@@ -25,7 +25,7 @@ def ports(container_ports):
         print(port['PublicPort'])
         print(public_ports)
         print(port)
-        public_ports = public_ports.append(port['PublicPort'])
+        public_ports[:0] = [port['PublicPort']]
     return public_ports
 
 
