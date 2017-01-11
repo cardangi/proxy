@@ -32,13 +32,13 @@ def group_containers_by_env(container_id, container_ports, ip_address):
         env = container['Config']['Env']
         print(env)
         env = sort_env(env)
-        print(ip_address + ':' + container_ports[0])
-        hosts.update({env['VIRTUAL_HOST']: {
-            'ip': {
-                ip_address + ':' + container_ports[0]
-            },
-            'https': env['HTTPS']
-        }})
+        if env['VIRTUAL_HOST']:
+            hosts.update({env['VIRTUAL_HOST']: {
+                'ip': {
+                    ip_address + ':' + container_ports[0]
+                },
+                'https': env['HTTPS']
+            }})
 
 
 def ports(container_ports):
@@ -83,11 +83,11 @@ def sort_env(env):
     nginx_config = {}
     for env_var in env:
         environment = {env_var.split('=')[0]: env_var.split('=')[1]}
-        if 'VIRTUAL_HOST' in environment:
+        if 'VIRTUAL_HOST' in environment.keys():
             nginx_config['VIRTUAL_HOST'] = environment['VIRTUAL_HOST']
-        if 'LETSENCRYPT_EMAIL' in environment:
+        if 'LETSENCRYPT_EMAIL' in environment.keys():
             nginx_config['LETSENCRYPT_EMAIL'] = environment['LETSENCRYPT_EMAIL']
-        if not 'HTTPS' in environment:
+        if not 'HTTPS' in environment.keys():
             nginx_config['HTTPS'] = True
     return nginx_config
 
