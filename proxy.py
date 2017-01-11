@@ -25,11 +25,12 @@ def get_containers():
 
 
 def group_containers_by_env(container_id, container_ports, ip_address):
-    container = client.inspect_container(container_id)
-    env = container['Config']['Env']
-    env = sort_env(env)
-    print(ip_address + ':' + container_ports[0])
-    hosts[env[1]] = None
+    if 0 in container_ports:
+        container = client.inspect_container(container_id)
+        env = container['Config']['Env']
+        env = sort_env(env)
+        print(ip_address + ':' + container_ports[0])
+        hosts[env[1]] = None
 
 
 def ports(container_ports):
