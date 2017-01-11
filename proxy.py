@@ -12,6 +12,7 @@ def get_containers():
         ip_address = container['NetworkSettings']['Networks']['bridge']['IPAddress']
         container_ports = ports(container['Ports'])
         container_id = container['Id'][:8]
+        print(container_ports)
         print(
             'Container with id: ' + container_id + ', on ip ' + ip_address + ', on port/s: ' + ', '.join(
                 container_ports))
