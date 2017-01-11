@@ -24,7 +24,7 @@ def get_containers():
 def ports(container_ports):
     public_ports = []
     for port in container_ports:
-        if 'PublicPort' in port.keys() and 'PrivatePort' in port.keys:
+        if 'PublicPort' in port.keys() and 'PrivatePort' in port.keys():
             if 80 in port['PrivatePort'] or 8080 in port['PrivatePort'] or 8000 in port['PrivatePort']:
                 public_ports[:0] = [str(port['PublicPort'])]
     return public_ports
