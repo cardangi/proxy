@@ -18,7 +18,7 @@ def get_containers():
         print(
             'Container with id: ' + container_id + ', on ip ' + ip_address + ', on port/s: ' + ', '.join(
                 container_ports))
-    print()
+    print('')
 
 
 def ports(container_ports):
