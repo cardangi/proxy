@@ -4,6 +4,27 @@ import json
 client = docker.Client(base_url='unix://var/run/docker.sock')
 
 
+def get_containers():
+    containers = client.containers(all=True, filters={
+        'status': 'running'
+    })
+    for container in containers:
+        ip_address = container['NetworkSettings']['Networks']['bridge']['IPAddress']
+        container_ports = ports(container['Ports'])
+        container_id = container['Id'][:8]
+        print(
+            'Container with id: ' + container_id + ', on ip ' + ip_address + ', on port/s: ' + ', '.join(
+                container_ports))
+    print()
+
+
+def ports(container_ports):
+    public_ports = []
+    for port in container_ports:
+        public_ports = port['PublicPort']
+    return public_ports
+
+
 def start(container_id):
     container = client.inspect_container(container_id)
     ipaddress = container['NetworkSettings']['Networks']['bridge']['IPAddress']
@@ -72,6 +93,6 @@ for event in client.events():
     event = json.loads(event)
     if 'Action' in event.keys() and 'id' in event.keys():
         if 'start' in event['Action']:
-            start(event['id'])
+            get_containers()
         if 'destroy' in event['Action']:
             destroy(event['id'])
