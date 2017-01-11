@@ -26,7 +26,7 @@ def get_containers():
         group_containers_by_env(container_id, container_ports, ip_address)
     print('')
     print(hosts)
-    render()
+    print(render())
 
 
 def group_containers_by_env(container_id, container_ports, ip_address):
