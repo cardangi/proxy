@@ -33,11 +33,11 @@ def group_containers_by_env(container_id, container_ports, ip_address):
         print(env)
         env = sort_env(env)
         print(ip_address + ':' + container_ports[0])
-        hosts.update({env[0]: {
+        hosts.update({env['VIRTUAL_HOST']: {
             'ip': {
                 ip_address + ':' + container_ports[0]
             },
-            'https': env[3]
+            'https': env['HTTPS']
         }})
 
 
