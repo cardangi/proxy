@@ -30,7 +30,7 @@ def group_containers_by_env(container_id, container_ports, ip_address):
         env = container['Config']['Env']
         env = sort_env(env)
         print(ip_address + ':' + container_ports[0])
-        hosts[env[1]] = None
+        hosts[env[1]][:0] = ip_address + ':' + container_ports[0]
 
 
 def ports(container_ports):
