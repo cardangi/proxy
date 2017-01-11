@@ -3,7 +3,7 @@ import json
 
 client = docker.Client(base_url='unix://var/run/docker.sock')
 
-hosts = []
+hosts = {}
 
 
 def get_containers():
@@ -22,6 +22,8 @@ def get_containers():
             'Container with id: ' + container_id + ', on ip ' + ip_address + ', on port/s: ' + ', '.join(
                 container_ports))
         group_containers_by_env(container_id, container_ports, ip_address)
+    print('')
+    print(hosts)
 
 
 def group_containers_by_env(container_id, container_ports, ip_address):
@@ -30,7 +32,8 @@ def group_containers_by_env(container_id, container_ports, ip_address):
         env = container['Config']['Env']
         env = sort_env(env)
         print(ip_address + ':' + container_ports[0])
-        hosts[env[1]][:0] = ip_address + ':' + container_ports[0]
+        hosts[env[0]]['ip'].update({ip_address + ':' + container_ports[0]})
+        hosts[env[0]]['https'] = env[3]
 
 
 def ports(container_ports):
@@ -71,22 +74,6 @@ def destroy(container_id):
     print('Destroyed container with id: ' + container_id)
 
 
-def data(container_id, ports, env):
-    add_host = True
-    nginx_config = sort_env(env)
-
-    with open('data.json', 'r') as f:
-        json_data = json.load(f)
-
-    for host in json_data:
-        if nginx_config[1] in host:
-            add_host = False
-    if add_host is True:
-        add_host_to_json(container_id, ports, nginx_config, json_data)
-    if add_host is False:
-        return None
-
-
 def sort_env(env):
     nginx_config = []
     for env_var in env:
@@ -97,14 +84,6 @@ def sort_env(env):
         if 'HTTPS' in env_var:
             nginx_config[3] = env_var['HTTPS']
     return nginx_config
-
-
-def add_host_to_json(container_id, ports, config, json_data):
-    print([{'ports': ports}, {'config': config}])
-    json_data = json_data.append([{'ports': ports}, {'config': config}])
-    print(json_data)
-    with open('data.json', 'w') as f:
-        json.dump(json_data, f)
 
 
 for event in client.events():
