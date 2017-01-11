@@ -80,15 +80,15 @@ def destroy(container_id):
 
 
 def sort_env(env):
-    nginx_config = []
+    nginx_config = {}
     for env_var in env:
         environment = {env_var.split('=')[0]: env_var.split('=')[1]}
         if 'VIRTUAL_HOST' in environment:
-            nginx_config[1] = environment['VIRTUAL_HOST']
+            nginx_config['VIRTUAL_HOST'] = environment['VIRTUAL_HOST']
         if 'LETSENCRYPT_EMAIL' in environment:
-            nginx_config[2] = environment['LETSENCRYPT_EMAIL']
+            nginx_config['LETSENCRYPT_EMAIL'] = environment['LETSENCRYPT_EMAIL']
         if not 'HTTPS' in environment:
-            nginx_config[3] = True
+            nginx_config['HTTPS'] = True
     return nginx_config
 
 
