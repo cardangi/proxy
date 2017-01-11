@@ -3,6 +3,8 @@ import json
 
 client = docker.Client(base_url='unix://var/run/docker.sock')
 
+hosts = []
+
 
 def get_containers():
     containers = client.containers(all=True, filters={
@@ -19,14 +21,24 @@ def get_containers():
         print(
             'Container with id: ' + container_id + ', on ip ' + ip_address + ', on port/s: ' + ', '.join(
                 container_ports))
+        group_containers_by_env(container_id, container_ports, ip_address)
+
+
+def group_containers_by_env(container_id, container_ports, ip_address):
+    container = client.inspect_container(container_id)
+    env = container['Config']['Env']
+    env = sort_env(env)
+    print(ip_address + ':' + container_ports[0])
+    hosts[env[1]] = None
 
 
 def ports(container_ports):
     public_ports = []
     for port in container_ports:
+        private_port = str(port['PrivatePort'])
         if 'PublicPort' in port.keys() and 'PrivatePort' in port.keys():
-            if '80' in str(port['PrivatePort']) or '8080' in str(port['PrivatePort']) or '8000' in str(port['PrivatePort']):
-                public_ports[:0] = [str(port['PublicPort'])]
+            if '80' in private_port or '8080' in private_port or '8000' in private_port:
+                public_ports[:0] = [private_port]
     return public_ports
 
 
