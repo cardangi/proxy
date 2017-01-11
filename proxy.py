@@ -9,14 +9,15 @@ def get_containers():
         'status': 'running'
     })
     for container in containers:
-        print(container['NetworkSettings']['Networks']['bridge']['IPAddress'])
-        ip_address = container['NetworkSettings']['Networks']['bridge']['IPAddress']
+        network = container['NetworkSettings']['Networks']
+        ip_address = 'No ip'
+        if 'bridge' in network.keys():
+            ip_address = network['bridge']['IPAddress']
         container_ports = ports(container['Ports'])
         container_id = container['Id'][:8]
-        print(container_ports)
-        #print(
-        #    'Container with id: ' + container_id + ', on ip ' + ip_address + ', on port/s: ' + ', '.join(
-        #        container_ports))
+        print(
+            'Container with id: ' + container_id + ', on ip ' + ip_address + ', on port/s: ' + ', '.join(
+                container_ports))
     print()
 
 
