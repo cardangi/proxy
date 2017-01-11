@@ -13,15 +13,18 @@ def get_containers():
         container_ports = ports(container['Ports'])
         container_id = container['Id'][:8]
         print(container_ports)
-        print(
-            'Container with id: ' + container_id + ', on ip ' + ip_address + ', on port/s: ' + ', '.join(
-                container_ports))
+        #print(
+        #    'Container with id: ' + container_id + ', on ip ' + ip_address + ', on port/s: ' + ', '.join(
+        #        container_ports))
     print()
 
 
 def ports(container_ports):
     public_ports = []
     for port in container_ports:
+        print(port['PublicPort'])
+        print(public_ports)
+        print(port)
         public_ports = public_ports.append(port['PublicPort'])
     return public_ports
 
