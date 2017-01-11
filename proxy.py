@@ -18,11 +18,15 @@ def start(container_id):
 
     if ports:
         ports_str = ', '.join(ports)
-        data(container_id, ports, env)
+        # data(container_id, ports, env)
 
     print('Started container with id: ' + container_id)
     print(
         'Container ' + container['Config']['Hostname'] + ', is on ip ' + ipaddress + ', and port/s ' + ports_str)
+    print(client.containers(all=True, filters={
+        'status': 'running',
+        'net': 'bridge'
+    }))
 
 
 def destroy(container_id):
