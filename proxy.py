@@ -23,9 +23,9 @@ def start(container_id):
     print('Started container with id: ' + container_id)
     print(
         'Container ' + container['Config']['Hostname'] + ', is on ip ' + ipaddress + ', and port/s ' + ports_str)
-    print(client.containers(all=True, filters={
+    print(json.dump(client.containers(all=True, filters={
         'status': 'running'
-    }))
+    })))
 
 
 def destroy(container_id):
