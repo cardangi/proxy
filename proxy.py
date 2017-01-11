@@ -1,3 +1,5 @@
+import os
+import jinja2
 import docker
 import json
 
@@ -54,34 +56,6 @@ def ports(container_ports):
     return public_ports
 
 
-def start(container_id):
-    container = client.inspect_container(container_id)
-    ipaddress = container['NetworkSettings']['Networks']['bridge']['IPAddress']
-    exp_ports = container['NetworkSettings']['Ports']
-    env = container['Config']['Env']
-    ports = []
-    ports_str = 'no ports'
-
-    for port in exp_ports:
-        if exp_ports[port] is not None:
-            ports[:0] = [exp_ports[port][0]['HostPort']]
-
-    if ports:
-        ports_str = ', '.join(ports)
-        # data(container_id, ports, env)
-
-    print('Started container with id: ' + container_id)
-    print(
-        'Container ' + container['Config']['Hostname'] + ', is on ip ' + ipaddress + ', and port/s ' + ports_str)
-    print(json.dumps(client.containers(all=True, filters={
-        'status': 'running'
-    })))
-
-
-def destroy(container_id):
-    print('Destroyed container with id: ' + container_id)
-
-
 def sort_env(env):
     nginx_config = {}
     for env_var in env:
@@ -90,9 +64,19 @@ def sort_env(env):
             nginx_config['VIRTUAL_HOST'] = environment['VIRTUAL_HOST']
         if 'LETSENCRYPT_EMAIL' in environment.keys():
             nginx_config['LETSENCRYPT_EMAIL'] = environment['LETSENCRYPT_EMAIL']
-        if not 'HTTPS' in environment.keys():
+        if 'HTTPS' not in environment.keys():
             nginx_config['HTTPS'] = True
     return nginx_config
+
+
+def render():
+    context = {
+        hosts: hosts
+    }
+    path, filename = os.path.split('nginx.jinja2')
+    print(jinja2.Environment(
+        loader=jinja2.FileSystemLoader(path or './')
+    ).get_template(filename).render(context))
 
 
 for event in client.events():
@@ -101,4 +85,4 @@ for event in client.events():
         if 'start' in event['Action']:
             get_containers()
         if 'destroy' in event['Action']:
-            destroy(event['id'])
+            get_containers()
