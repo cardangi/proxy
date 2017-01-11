@@ -30,7 +30,7 @@ def group_containers_by_env(container_id, container_ports, ip_address):
     if container_ports:
         container = client.inspect_container(container_id)
         env = container['Config']['Env']
-        print(json.dumps(env))
+        print(env['PATH'])
         env = sort_env(env)
         print(ip_address + ':' + container_ports[0])
         hosts.update({env[0]: {
