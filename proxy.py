@@ -8,24 +8,25 @@ def get_containers():
     containers = client.containers(all=True, filters={
         'status': 'running'
     })
+    print('')
     for container in containers:
         network = container['NetworkSettings']['Networks']
-        ip_address = 'No ip'
+        ip_address = 'None'
         if 'bridge' in network.keys():
             ip_address = network['bridge']['IPAddress']
         container_ports = ports(container['Ports'])
-        container_id = container['Id'][:8]
+        container_id = container['Id'][:12]
         print(
             'Container with id: ' + container_id + ', on ip ' + ip_address + ', on port/s: ' + ', '.join(
                 container_ports))
-    print('')
 
 
 def ports(container_ports):
     public_ports = []
     for port in container_ports:
-        if 'PublicPort' in port.keys():
-            public_ports[:0] = [str(port['PublicPort'])]
+        if 'PublicPort' in port.keys() and 'PrivatePort' in port.keys:
+            if 80 in port['PrivatePort'] or 8080 in port['PrivatePort'] or 8000 in port['PrivatePort']:
+                public_ports[:0] = [str(port['PublicPort'])]
     return public_ports
 
 
